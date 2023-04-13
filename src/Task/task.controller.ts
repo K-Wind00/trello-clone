@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+// eslint-disable-next-line prettier/prettier
+import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { createTask } from './dto/create-task.dto';
 
@@ -19,5 +20,11 @@ export class TaskController {
   @Post()
   addTask(@Body() body: createTask) {
     return this.taskService.createNewTask(body.id, body.task);
+  }
+
+  @Delete('/:id')
+  @HttpCode(204)
+  deleteTask(@Param('id') id: string) {
+    return this.taskService.deleteTask(+id);
   }
 }

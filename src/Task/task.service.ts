@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-const tasks = [
+let tasks = [
   { id: 1, task: 'Gym' },
   { id: 2, task: 'Programming' },
 ];
@@ -19,5 +19,9 @@ export class TaskService {
     const newTask = { id: id, task: task };
     tasks.push(newTask);
     return newTask;
+  }
+
+  deleteTask(id: number) {
+    tasks = tasks.filter((task) => task.id !== id);
   }
 }
