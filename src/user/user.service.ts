@@ -10,19 +10,20 @@ import { User } from './user.entity';
 export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User> ) {}
 
-  createNewUser(createUser: CreateUser) {
+  async createNewUser(createUser: CreateUser) {
 
     // To be implemented - validation for create user 
 
     const { email, login, password } = createUser;
 
-    const newUser = this.userRepository.create({ email, login, password });
-    
-    if (!newUser){
-      throw new HttpException('ERROR', HttpStatus.BAD_REQUEST);
-    }
+    const isUserExists = await this.userRepository.find({ where: { login } });
 
+    if (isUserExists.length > 0){
+      throw new HttpException('User already exists!', HttpStatus.BAD_REQUEST);
+    }
+    const newUser = this.userRepository.create({ email, login, password });
     return this.userRepository.save(newUser);
+
   }
 
   async getAll(): Promise<User[]> {
