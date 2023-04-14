@@ -19,7 +19,7 @@ export class TaskController {
 
   @Post()
   addTask(@Body() body: createTask) {
-    return this.taskService.createNewTask(body.id, body.task);
+    return this.taskService.createNewTask(body.task, body.description);
   }
 
   @Delete('/:id')

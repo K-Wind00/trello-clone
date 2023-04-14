@@ -1,4 +1,9 @@
+import { IsString } from 'class-validator';
+
 export class createTask {
-  id: number;
+  @IsString()
   task: string;
+
+  @IsString()
+  description: string;
 }
